@@ -49,6 +49,32 @@ const api = {
           reject(err)
         })
     })
+  },
+
+  getIgMedias (igId, token) {
+    return new Promise((resolve, reject) => {
+      fetch(import.meta.env.VITE_IG_URL + `/${igId}/media?access_token=${token}`)
+        .then(r => r.json())
+        .then(res => {
+          resolve(res)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  },
+
+  getIgPost (postId, token) {
+    return new Promise((resolve, reject) => {
+      fetch(import.meta.env.VITE_IG_URL + `/${postId}?access_token=${token}&fields=caption,comments_count,id,ig_id,is_comment_enabled,like_count,media_product_type,media_type,media_url,timestamp`)
+        .then(r => r.json())
+        .then(res => {
+          resolve(res)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
   }
 }
 

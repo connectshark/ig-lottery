@@ -10,11 +10,14 @@ const name = ref('')
 api.userBasic(store.token)
   .then(res => {
     name.value = res.name
+    store.userId = res.id
   })
 </script>
 
 <template>
   <main>
-    <h1>Hello {{name}}</h1>
+    <h1>Hello 歡迎來到IG抽抽</h1>
+    
+    <router-link to="/login">login</router-link>
   </main>
 </template>

@@ -8,22 +8,27 @@
 </template>
 
 <script>
+import { onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useTokenStore } from '../stores/token'
 import api from '../utils/api'
 
 export default {
-  async setup () {
-    const code = useRoute().query.code
-    const authResponse = await api.auth(code)
-    const store = useTokenStore()
-    store.token = authResponse.access_token
-    
-    const accountResponse = await api.getUserAccount(store.token)
-    const fbId = accountResponse.data[0].id
-    const igRes = await api.getIGBusinessAccount(fbId, store.token)
-    const igId = igRes.instagram_business_account.id
-    store.userId = igId
+  setup () {
+    onBeforeMount(async () => {
+      const store = useTokenStore()
+      const router = useRouter()
+      const code = useRoute().query.code
+      const authResponse = await api.auth(code)
+      store.token = authResponse.access_token
+      
+      const accountResponse = await api.getUserAccount(store.token)
+      const fbId = accountResponse.data[0].id
+      const igRes = await api.getIGBusinessAccount(fbId, store.token)
+      const igId = igRes.instagram_business_account.id
+      store.userId = igId
+      router.replace('/me')
+    })
   }
 }
 </script>
