@@ -12,14 +12,7 @@ onErrorCaptured(() => {
 
 <template>
   <main>
-    <Suspense>
-      <template #default>
-        <Welcome />
-      </template>
-      <template #fallback>
-        <div>驗證中</div>
-      </template>
-    </Suspense>
+    <Welcome />
     <div v-if="store.token">
       <router-link to="/me">選擇列表</router-link>
     </div>
