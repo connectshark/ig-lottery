@@ -12,6 +12,7 @@ import { onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useTokenStore } from '../stores/token'
 import api from '../utils/api'
+import ls from '../utils/ls'
 
 export default {
   setup () {
@@ -27,6 +28,10 @@ export default {
       const igRes = await api.getIGBusinessAccount(fbId, store.token)
       const igId = igRes.instagram_business_account.id
       store.userId = igId
+      ls.save('tokenStore', {
+        token: store.token,
+        userId: store.userId
+      })
       router.replace('/me')
     })
   }

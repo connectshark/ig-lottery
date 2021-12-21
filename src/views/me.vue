@@ -30,6 +30,7 @@ api.getIgMedias(store.userId, store.token)
   width: 90%;
   max-width: 600px;
   margin: auto;
+  padding: 20px 0;
   .ig-group{
     display: grid;
     grid-template-columns: repeat(1, 1fr);

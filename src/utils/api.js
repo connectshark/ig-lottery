@@ -13,15 +13,10 @@ const api = {
   },
 
   userBasic (token) {
-    return new Promise((resolve, reject) => {
-      fetch(import.meta.env.VITE_IG_URL + `/me?access_token=${token}`)
+    return new Promise(resolve => {
+      fetch(import.meta.env.VITE_IG_URL + `/me?access_token=${token}&fields=id,name,picture{url}`)
         .then(r => r.json())
-        .then(res => {
-          resolve(res)
-        })
-        .catch(err => {
-          reject(err)
-        })
+        .then(res => resolve(res))
     })
   },
 
@@ -40,7 +35,7 @@ const api = {
 
   getIGBusinessAccount (fbId, token) {
     return new Promise((resolve, reject) => {
-      fetch(import.meta.env.VITE_IG_URL + `/${fbId}?access_token=${token}&fields=instagram_business_account`)
+      fetch(import.meta.env.VITE_IG_URL + `/${fbId}?access_token=${token}&fields=instagram_business_account,name`)
         .then(r => r.json())
         .then(res => {
           resolve(res)

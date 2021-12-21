@@ -3,22 +3,17 @@ const url = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${import.meta
 </script>
 
 <template>
-<div class="login">
-	<a :href="url"><i class='bx bxl-instagram'></i>授權</a>
-</div>
-
+<a :href="url" class="login"><i class='bx bxl-instagram'></i>授權</a>
 </template>
 
 <style lang="scss" scoped>
-.login{
-	a{
-		font-size: 30px;
-		line-height: 2;
-		color: #eee;
-		text-decoration: none;
-		&:hover{
-			text-decoration: underline;
-		}
-	}
+a.login{
+  font-size: 30px;
+  line-height: 2;
+  color: #eee;
+  text-decoration: none;
+  &:hover{
+    text-decoration: underline;
+  }
 }
 </style>
