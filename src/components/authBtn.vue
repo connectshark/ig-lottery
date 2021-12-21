@@ -8,10 +8,16 @@ const url = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${import.meta
 
 <style lang="scss" scoped>
 a.login{
-  font-size: 30px;
+  background-image: linear-gradient(135deg,#35EDFF  0%, #33BEFF 100%);
+  font-size: 20px;
   line-height: 2;
-  color: #eee;
   text-decoration: none;
+  color: #fff;
+  border-radius: 20px;
+  display: block;
+  padding: 0 10px;
+  margin: auto;
+  width: fit-content;
   &:hover{
     text-decoration: underline;
   }

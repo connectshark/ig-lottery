@@ -6,14 +6,19 @@ import postItem from '../components/postItem.vue'
 
 const store = useTokenStore()
 const list = ref([])
+const errMsg = ref('')
 api.getIgMedias(store.userId, store.token)
   .then(res => {
     list.value = res.data
+  })
+  .catch(() => {
+    errMsg.value = '登入效期已過請重新登入'
   })
 </script>
 
 <template>
 <div class="me-view">
+  <div v-if="errMsg">{{ errMsg }}</div>
   <ul class="ig-group">
     <li class="ig-post" v-for="post in list" :key="post.id">
       <suspense>

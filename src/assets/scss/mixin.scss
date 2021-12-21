@@ -1,0 +1,19 @@
+@import './color.scss';
+
+@mixin linkBtn {
+  color: $main;
+  box-shadow: 0 0 0 2px $main;
+  border-radius: 10px;
+  display: block;
+  width: fit-content;
+  font-size: 16px;
+  line-height: 2;
+  padding: 0 10px;
+  background-color: #fff;
+  transition: color .3s ease, box-shadow .3s ease, background .3s ease;
+  margin: auto;
+  &:hover{
+    color: #fff;
+    background-color: $main;
+  }
+}

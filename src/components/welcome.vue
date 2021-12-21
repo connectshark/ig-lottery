@@ -38,6 +38,7 @@ export default {
 </script>
 
 <template>
+<div class="welcome">
   <div v-if="loading">
     <p>讀取中</p>
   </div>
@@ -46,7 +47,12 @@ export default {
     <h2 v-else-if="errMsg">{{ errMsg }}</h2>
     <h2 v-else>請登入</h2>
   </div>
+</div>
 </template>
 
 <style scoped lang="scss">
+.welcome{
+  font-size: 16px;
+  line-height: 2;
+}
 </style>

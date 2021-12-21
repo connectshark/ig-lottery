@@ -25,13 +25,18 @@ const navs = [
 
 <style scoped lang="scss">
 header {
-  width: 90%;
-  margin: auto;
+  position: sticky;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+  border-radius: 0 0 10px 10px;
+  top: 0;
+  left: 0;
   justify-content: space-between;
-  padding: 5px 0;
+  background-color: #ffffffaa;
+  padding: 20px 10px;
+  backdrop-filter: saturate(180%) blur(20px);
+  box-shadow: 0 0 5px #ccc;
   .logo {
     font-size: 24px;
   }
