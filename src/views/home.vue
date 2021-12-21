@@ -8,6 +8,9 @@ const store = useTokenStore()
 <template>
   <main class="home-view">
     <div class="card">
+      <h2>歡迎使用IG抽抽</h2>
+    </div>
+    <div class="card">
       <Welcome />
       <div v-if="store.token">
         <router-link class="btn" to="/me">選擇列表</router-link>
