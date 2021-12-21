@@ -13,19 +13,30 @@ api.getIgMedias(store.userId, store.token)
 </script>
 
 <template>
-  <h1>Hello me</h1>
-  <ul>
+<div class="me-view">
+  <ul class="ig-group">
     <li class="ig-post" v-for="post in list" :key="post.id">
       <suspense>
         <postItem :id="post.id" />
       </suspense>
     </li>
   </ul>
+</div>
 </template>
 
 <style scoped lang="scss">
-.ig-post{
-  width: 33%;
-  display: inline-block;
+@import '../assets/scss/media.scss';
+.me-view{
+  width: 90%;
+  max-width: 600px;
+  margin: auto;
+  .ig-group{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-row-gap: 20px;
+    @include desktops {
+      grid-template-columns: repeat(3, 200px);
+    }
+  }
 }
 </style>

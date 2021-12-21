@@ -7,7 +7,7 @@ const store = useTokenStore()
 
 const name = ref('')
 
-api.userBasic(store.token)
+api.getUserAccount(store.token)
   .then(res => {
     name.value = res.name
     store.userId = res.id

@@ -75,6 +75,32 @@ const api = {
           reject(err)
         })
     })
+  },
+
+  getIgPostComment (postId, token) {
+    return new Promise((resolve, reject) => {
+      fetch(import.meta.env.VITE_IG_URL + `/${postId}/comments?access_token=${token}`)
+        .then(r => r.json())
+        .then(res => {
+          resolve(res)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+  },
+
+  getIgCommentUser (commentId, token) {
+    return new Promise((resolve, reject) => {
+    fetch(import.meta.env.VITE_IG_URL + `/${commentId}?access_token=${token}&fields=from,text,timestamp,replies,username`)
+      .then(r => r.json())
+      .then(res => {
+        resolve(res)
+      })
+      .catch(err => {
+        reject(err)
+      })
+    })
   }
 }
 
