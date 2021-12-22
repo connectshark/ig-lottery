@@ -1,8 +1,10 @@
 <script setup>
-import { reactive, ref } from 'vue'
-import commentItem from '../components/commentItem.vue'
+import { ref } from 'vue'
 import { useTokenStore } from '../stores/token'
 import api from '../utils/api'
+import dayjs from 'dayjs'
+import CommentGroup from '../components/comment/commentGroup.vue'
+import Loading from '../components/loading.vue'
 
 const props = defineProps({
   postId: String
@@ -10,50 +12,72 @@ const props = defineProps({
 
 const store = useTokenStore()
 const post = ref({})
+const time = ref('')
 api.getIgPost(props.postId, store.token)
   .then(res => {
     post.value = res
-  })
-const comments = ref([])
-api.getIgPostComment(props.postId, store.token)
-  .then(res => {
-    comments.value = res.data
+    time.value = dayjs(res.timestamp).format('YYYY/MM/DD')
   })
 </script>
 
 <template>
   <div class="post-view">
     <div class="post">
-      <figure>
-        <img :src="post.media_url" :alt="post.caption">
-      </figure>
-      <figcaption>{{ post.caption }}</figcaption>
+      <h3 class="title">貼文預覽</h3>
+      <p class="content">{{ post.caption }}</p>
       <div class="detail">
-        <span class="like"><i class='bx bxs-heart'></i>{{ post.like_count }}</span>
-        <span class="comment"><i class='bx bxs-comment-dots'></i>{{ post.comments_count }}</span>
+        <img :src="post.media_url" :alt="post.caption" />
+        <span>{{ time }}</span>
+        <span>
+          <i class="bx bxs-heart"></i>
+          {{ post.like_count }}
+        </span>
+        <span>
+          <i class="bx bxs-comment-dots"></i>
+          {{ post.comments_count }}
+        </span>
       </div>
     </div>
-    
-    <ul class="comments">
-      <li v-for="comment in comments" :key="comment.id">
-        <Suspense>
-          <commentItem :id="comment.id" :content="comment.text" />
-        </Suspense>
-      </li>
-    </ul>
+
+    <Suspense>
+      <template #default>
+        <CommentGroup :postId="props.postId" />
+      </template>
+      <template #fallback>
+        <Loading/>
+      </template>
+    </Suspense>
   </div>
 </template>
 
 <style scoped lang="scss">
-.post-view{
-  width: 80%;
+.post-view {
+  width: 100%;
   max-width: 600px;
   margin: auto;
-  figure{
-    img{
-      width: 100%;
-      vertical-align: middle;
-      border-radius: 20px;
+  .post {
+    width: 80%;
+    margin: auto;
+    font-size: 0.5rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    .title {
+      font-size: 1rem;
+      padding: 1rem 0;
+      text-align: left;
+      font-weight: 700;
+    }
+    .detail {
+      font-size: 1rem;
+      line-height: 1.5;
+      img {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 5px;
+        overflow: hidden;
+      }
     }
   }
 }

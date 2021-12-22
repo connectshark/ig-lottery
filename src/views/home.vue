@@ -1,21 +1,14 @@
 <script setup>
 import AuthBtn from '../components/authBtn.vue'
-import Welcome from '../components/welcome.vue'
 import { useTokenStore } from '../stores/token'
-const store = useTokenStore()
+import Guide from '../components/guide.vue';
 </script>
 
 <template>
+  <Guide :title="'歡迎使用IG抽抽樂'" :content="'留言抽獎最佳選擇'"/>
   <main class="home-view">
     <div class="card">
-      <h2>歡迎使用IG抽抽</h2>
-    </div>
-    <div class="card">
-      <Welcome />
-      <div v-if="store.token">
-        <router-link class="btn" to="/me">選擇列表</router-link>
-      </div>
-      <AuthBtn v-else />
+      <AuthBtn/>
     </div>
   </main>
 </template>
@@ -24,20 +17,20 @@ const store = useTokenStore()
 @import '../assets/scss/mixin.scss';
 
 .home-view{
-  width: 100%;
   max-width: 600px;
   margin: auto;
-  padding: 20px 0;
+  padding: 1rem 0;
   .btn{
     @include linkBtn;
   }
   .card{
     margin: auto;
-    width: 60%;
-    padding: 20px;
-    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
+    width: 90%;
+    padding: 2rem;
+    box-sizing: border-box;
+    box-shadow: 0 0 2rem -12px rgb(0 0 0 / 25%);
     margin-bottom: 30px;
-    border-radius: 20px;
+    border-radius: 1rem;
   }
   
 }

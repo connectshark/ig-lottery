@@ -3,12 +3,15 @@ const url = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${import.meta
 </script>
 
 <template>
-<a :href="url" class="login"><i class='bx bxl-instagram'></i>授權</a>
+  <a :href="url" class="login">
+    <i class="bx bxl-instagram"></i>授權
+  </a>
 </template>
 
 <style lang="scss" scoped>
-a.login{
-  background-image: linear-gradient(135deg,#35EDFF  0%, #33BEFF 100%);
+@import "../assets/scss/color.scss";
+a.login {
+  background-image: linear-gradient(135deg, $sub 0%, $main 100%);
   font-size: 20px;
   line-height: 2;
   text-decoration: none;
@@ -18,7 +21,7 @@ a.login{
   padding: 0 10px;
   margin: auto;
   width: fit-content;
-  &:hover{
+  &:hover {
     text-decoration: underline;
   }
 }
