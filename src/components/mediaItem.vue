@@ -1,34 +1,34 @@
 <script setup>
 import dayjs from 'dayjs'
-import { useTokenStore } from '../stores/token'
-import api from '../utils/api'
-
-const store = useTokenStore()
 const props = defineProps({
-  id: String
+  id: String,
+  like_count: Number,
+  media_url: String,
+  comments_count: Number,
+  caption: String,
+  timestamp: String
 })
-
-const post = await api.getIgPost(props.id, store.token)
-const time = dayjs(post.timestamp).format('YYYY/MM/DD')
+const time = dayjs(props.timestamp).format('YYYY/MM/DD')
 </script>
 
 <template>
   <router-link :to="`/post/${props.id}`" class="media-item">
     <figure>
-      <img :src="post.media_url" :alt="post.caption" />
+      <img :src="props.media_url" :alt="props.caption" />
     </figure>
-    <h4 class="media-title">{{ post.caption }}</h4>
+    <h4 class="media-title">{{ props.caption }}</h4>
     <p class="media-detail">
       <i class="bx bxs-heart"></i>
-      {{ post.like_count }}
+      {{ props.like_count }}
       <i class="bx bxs-comment-dots"></i>
-      {{ post.comments_count }}
+      {{ props.comments_count }}
     </p>
     <p class="time">{{ time }}</p>
   </router-link>
 </template>
 
 <style scoped lang="scss">
+@import "../assets/scss/color.scss";
 .media-item {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -58,6 +58,9 @@ const time = dayjs(post.timestamp).format('YYYY/MM/DD')
   .media-detail {
     grid-area: detail;
     line-height: 2;
+    i {
+      color: $sub;
+    }
   }
   .time {
     grid-area: time;

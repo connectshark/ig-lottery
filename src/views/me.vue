@@ -19,21 +19,27 @@ api.getIgMedias(store.userId, store.token)
 </script>
 
 <template>
-  <Guide :title="'選擇抽獎貼文'" :content="'依照時間排序由新到舊依序排列'"/>
+  <Guide :title="'選擇抽獎貼文'" :content="'依照時間排序由新到舊依序排列'" />
   <div class="me-view">
-    <Loading v-if="loading"/>
-    <ul class="ig-group" v-else>
+    <Loading v-if="loading" />
+    <transition-group appear="true" name="list" class="ig-group" tag="ul" v-else>
       <li class="ig-post" v-for="post in list" :key="post.id">
-        <Suspense>
-          <MediaItem :id="post.id" />
-        </Suspense>
+        <MediaItem
+          :id="post.id"
+          :like_count="post.like_count"
+          :media_url="post.media_url"
+          :comments_count="post.comments_count"
+          :caption="post.caption"
+          :timestamp="post.timestamp"
+        />
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
 <style scoped lang="scss">
 @import "../assets/scss/color.scss";
+@import "../assets/scss/transition.scss";
 .me-view {
   width: 100%;
   box-sizing: border-box;

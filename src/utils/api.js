@@ -48,7 +48,7 @@ const api = {
 
   getIgMedias (igId, token) {
     return new Promise((resolve, reject) => {
-      fetch(import.meta.env.VITE_IG_URL + `/${igId}/media?access_token=${token}`)
+      fetch(import.meta.env.VITE_IG_URL + `/${igId}/media?access_token=${token}&fields=caption,like_count,media_url,comments{user,username,timestamp,replies{username,timestamp,text},text},comments_count,timestamp`)
         .then(r => r.json())
         .then(res => {
           resolve(res)
@@ -61,7 +61,7 @@ const api = {
 
   getIgPost (postId, token) {
     return new Promise((resolve, reject) => {
-      fetch(import.meta.env.VITE_IG_URL + `/${postId}?access_token=${token}&fields=caption,comments_count,id,ig_id,is_comment_enabled,like_count,media_product_type,media_type,media_url,timestamp`)
+      fetch(import.meta.env.VITE_IG_URL + `/${postId}?access_token=${token}&fields=caption,like_count,media_url,comments{text,timestamp,username,replies{text,username,timestamp,id},id},comments_count`)
         .then(r => r.json())
         .then(res => {
           resolve(res)
@@ -69,32 +69,6 @@ const api = {
         .catch(err => {
           reject(err)
         })
-    })
-  },
-
-  getIgPostComment (postId, token) {
-    return new Promise((resolve, reject) => {
-      fetch(import.meta.env.VITE_IG_URL + `/${postId}/comments?access_token=${token}`)
-        .then(r => r.json())
-        .then(res => {
-          resolve(res)
-        })
-        .catch(err => {
-          reject(err)
-        })
-    })
-  },
-
-  getIgCommentUser (commentId, token) {
-    return new Promise((resolve, reject) => {
-    fetch(import.meta.env.VITE_IG_URL + `/${commentId}?access_token=${token}&fields=from,text,timestamp,replies,username`)
-      .then(r => r.json())
-      .then(res => {
-        resolve(res)
-      })
-      .catch(err => {
-        reject(err)
-      })
     })
   }
 }

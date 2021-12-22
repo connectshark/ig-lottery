@@ -1,15 +1,13 @@
 <script setup>
-import { useTokenStore } from '../../stores/token'
-import api from '../../utils/api'
 import dayjs from 'dayjs'
 const props = defineProps({
   id: String,
-  content: String
+  content: String,
+  timestamp: String,
+  username: String
 })
 
-const store = useTokenStore()
-const res = await api.getIgCommentUser(props.id, store.token)
-const time = dayjs(res.timestamp).format('YYYY/MM/DD HH:mm:ss')
+const time = dayjs(props.timestamp).format('YYYY/MM/DD HH:mm:ss')
 </script>
 
 <template>
@@ -17,8 +15,8 @@ const time = dayjs(res.timestamp).format('YYYY/MM/DD HH:mm:ss')
     target="_blank"
     class="account"
     rel="noopener noreferrer"
-    :href="`https://www.instagram.com/${res.username}/`"
-  >{{ res.username }}</a>
+    :href="`https://www.instagram.com/${props.username}/`"
+  >{{ props.username }}</a>
   <p class="content">{{ props.content }}</p>
   <p class="time">{{ time }}</p>
 </template>

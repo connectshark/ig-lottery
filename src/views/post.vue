@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useTokenStore } from '../stores/token'
 import api from '../utils/api'
 import dayjs from 'dayjs'
-import CommentGroup from '../components/comment/commentGroup.vue'
+import CommentItem from '../components/comment/commentItem.vue'
 import Loading from '../components/loading.vue'
 
 const props = defineProps({
@@ -11,12 +11,14 @@ const props = defineProps({
 })
 
 const store = useTokenStore()
+const loading = ref(true)
 const post = ref({})
 const time = ref('')
 api.getIgPost(props.postId, store.token)
   .then(res => {
     post.value = res
     time.value = dayjs(res.timestamp).format('YYYY/MM/DD')
+    loading.value = false
   })
 </script>
 
@@ -39,18 +41,32 @@ api.getIgPost(props.postId, store.token)
       </div>
     </div>
 
-    <Suspense>
-      <template #default>
-        <CommentGroup :postId="props.postId" />
-      </template>
-      <template #fallback>
-        <Loading/>
-      </template>
-    </Suspense>
+    <Loading v-if="loading" />
+    <template v-else>
+      <div class="comment-group" v-if="post.comments_count > 0">
+        <p class="title">帳號</p>
+        <p class="title">留言</p>
+        <p class="title">時間</p>
+        <CommentItem
+          v-for="comment in post.comments.data"
+          :id="comment.id"
+          :timestamp="comment.timestamp"
+          :content="comment.text"
+          :username="comment.username"
+        />
+      </div>
+      <div class="comment-empty" v-else>
+        <p class="icon">
+          <i class="bx bx-message-alt-x"></i>
+        </p>
+        <p class="content">無留言</p>
+      </div>
+    </template>
   </div>
 </template>
 
 <style scoped lang="scss">
+@import '../assets/scss/color.scss';
 .post-view {
   width: 100%;
   max-width: 600px;
@@ -68,6 +84,7 @@ api.getIgPost(props.postId, store.token)
       padding: 1rem 0;
       text-align: left;
       font-weight: 700;
+      color: $sub;
     }
     .detail {
       font-size: 1rem;
@@ -78,6 +95,31 @@ api.getIgPost(props.postId, store.token)
         border-radius: 5px;
         overflow: hidden;
       }
+      i{
+        color: $sub;
+      }
+    }
+  }
+  .comment-group {
+    text-align: left;
+    width: 90%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 1.5rem;
+    padding: 1.5rem 0;
+    .title {
+      font-size: 1.5rem;
+      line-height: 1;
+      font-weight: 700;
+    }
+  }
+  .comment-empty {
+    padding: 2rem 0;
+    font-size: 4rem;
+    .content {
+      font-size: 1.5rem;
     }
   }
 }
