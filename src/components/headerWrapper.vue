@@ -2,8 +2,8 @@
 
 const navs = [
   {
-    path: '/',
-    name: '首頁'
+    path: '/me',
+    name: '選擇貼文'
   }
 ]
 
@@ -61,9 +61,12 @@ header {
       .nav-item {
         display: inline-block;
         margin: 0 20px;
+        a{
+          color: $sub;
+        }
         &:hover {
           a {
-            color: $sub;
+            color: $main;
           }
         }
       }

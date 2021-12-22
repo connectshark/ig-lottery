@@ -61,7 +61,7 @@ api.getIgPost(props.postId, store.token)
     font-size: 0.5rem;
     padding: 1rem;
     box-sizing: border-box;
-    border-radius: 20px;
+    border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     .title {
       font-size: 1rem;

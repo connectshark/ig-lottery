@@ -28,9 +28,8 @@ import Guide from '../components/guide.vue';
     width: 90%;
     padding: 2rem;
     box-sizing: border-box;
-    box-shadow: 0 0 2rem -12px rgb(0 0 0 / 25%);
-    margin-bottom: 30px;
     border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
   
 }
