@@ -22,7 +22,7 @@ api.getIgMedias(store.userId, store.token)
   <Guide :title="'選擇抽獎貼文'" :content="'依照時間排序由新到舊依序排列'" />
   <div class="me-view">
     <Loading v-if="loading" />
-    <transition-group appear="true" name="list" class="ig-group" tag="ul" v-else>
+    <transition-group appear name="list" class="ig-group" tag="ul" v-else>
       <li class="ig-post" v-for="post in list" :key="post.id">
         <MediaItem
           :id="post.id"
@@ -46,6 +46,7 @@ api.getIgMedias(store.userId, store.token)
   max-width: 600px;
   margin: auto;
   padding: 20px 0;
+  overflow-x: hidden;
   .ig-group {
     .ig-post {
       padding: 20px;

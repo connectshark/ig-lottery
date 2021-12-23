@@ -12,13 +12,13 @@ const url = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${import.meta
 @import "../assets/scss/color.scss";
 a.login {
   background-image: linear-gradient(135deg, $sub 0%, $main 100%);
-  font-size: 20px;
+  font-size: 1.5rem;
   line-height: 2;
   text-decoration: none;
   color: #fff;
-  border-radius: 20px;
+  border-radius: 2rem;
   display: block;
-  padding: 0 10px;
+  padding: 0 1rem;
   margin: auto;
   width: fit-content;
   &:hover {

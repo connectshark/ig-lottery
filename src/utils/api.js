@@ -61,7 +61,7 @@ const api = {
 
   getIgPost (postId, token) {
     return new Promise((resolve, reject) => {
-      fetch(import.meta.env.VITE_IG_URL + `/${postId}?access_token=${token}&fields=caption,like_count,media_url,comments{text,timestamp,username,replies{text,username,timestamp,id},id},comments_count`)
+      fetch(import.meta.env.VITE_IG_URL + `/${postId}?access_token=${token}&fields=caption,like_count,media_url,timestamp,comments{text,timestamp,username,replies{text,username,timestamp,id},id},comments_count`)
         .then(r => r.json())
         .then(res => {
           resolve(res)

@@ -17,3 +17,18 @@
     background-color: $main;
   }
 }
+
+@mixin funBtn {
+  border: none;
+  outline: none;
+  color: $main;
+  box-shadow: 0 0 0 2px $main;
+  border-radius: .5rem;
+  background-color: #fff;
+  cursor: pointer;
+  transition: color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  &:hover {
+    color: #fff;
+    background-color: $main;
+  }
+}

@@ -11,39 +11,49 @@ const time = dayjs(props.timestamp).format('YYYY/MM/DD HH:mm:ss')
 </script>
 
 <template>
-  <a
-    target="_blank"
-    class="account"
-    rel="noopener noreferrer"
-    :href="`https://www.instagram.com/${props.username}/`"
-  >{{ props.username }}</a>
-  <p class="content">{{ props.content }}</p>
-  <p class="time">{{ time }}</p>
+  <div class="comment-item">
+    <a
+      target="_blank"
+      class="account"
+      rel="noopener noreferrer"
+      :href="`https://www.instagram.com/${props.username}/`"
+    >{{ props.username }}</a>
+    <p class="content">{{ props.content }}</p>
+    <p class="time">{{ time }}</p>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-@import '../../assets/scss/media.scss';
-.account{
-  color: deepskyblue;
-  word-break: break-all;
-  font-size: .5rem;
-  transition: font .3s ease;
+@import "../../assets/scss/media.scss";
+@import "../../assets/scss/color.scss";
+.comment-item {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
   @include desktops {
-    font-size: 1rem;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
-  &:hover{
-    text-decoration: underline;
+  .account {
+    color: $sub;
+    &:hover {
+      text-decoration: underline;
+    }
   }
-}
-.time{
-  font-size: .5rem;
-  transition: font .3s ease;
-  @include desktops {
-    font-size: 1rem;
+  .content {
+    @include desktops {
+      word-break: break-all;
+      margin-left: 1rem;
+    }
   }
-}
-.content, .time{
-  word-break: break-all;
-
+  .time {
+    font-size: 0.5rem;
+    @include desktops {
+      margin-left: auto;
+      font-size: 1rem;
+    }
+  }
 }
 </style>

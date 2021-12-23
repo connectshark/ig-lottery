@@ -1,5 +1,7 @@
 <script setup>
 import dayjs from 'dayjs'
+import { computed } from 'vue'
+
 const props = defineProps({
   caption: String,
   timestamp: String,
@@ -8,7 +10,7 @@ const props = defineProps({
   media_url: String
 })
 
-const time = dayjs(props.timestamp).format('YYYY/MM/DD')
+const time = computed(() => dayjs(props.timestamp).format('YYYY/MM/DD'))
 </script>
 
 <template>
@@ -36,21 +38,19 @@ const time = dayjs(props.timestamp).format('YYYY/MM/DD')
   .post {
     width: 80%;
     margin: auto;
-    font-size: 0.5rem;
+    font-size: 1rem;
     padding: 1rem;
     box-sizing: border-box;
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     .title {
-      font-size: 1rem;
+      font-size: 1.5rem;
       padding: 1rem 0;
       text-align: left;
       font-weight: 700;
       color: $sub;
     }
     .detail {
-      font-size: 1rem;
-      line-height: 1.5;
       img {
         width: 1rem;
         height: 1rem;

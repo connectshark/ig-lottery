@@ -5,6 +5,8 @@ import api from '../utils/api'
 import CommentItem from '../components/comment/commentItem.vue'
 import Loading from '../components/loading.vue'
 import Preview from '../components/preview.vue'
+import FilterPanel from '../components/filterPanel.vue'
+import formatter from '../utils/formatter'
 
 const props = defineProps({
   postId: String
@@ -16,12 +18,15 @@ const post = ref({})
 api.getIgPost(props.postId, store.token)
   .then(res => {
     post.value = res
+    store.comments = formatter.comments(res.comments.data)
     loading.value = false
   })
 </script>
 
 <template>
   <div class="post-view">
+    <FilterPanel/>
+    
     <Preview
       :caption="post.caption"
       :like_count="post.like_count"
@@ -29,13 +34,9 @@ api.getIgPost(props.postId, store.token)
       :timestamp="post.timestamp"
       :comments_count="post.comments_count"
     />
-
     <Loading v-if="loading" />
     <template v-else>
-      <div class="comment-group" v-if="post.comments_count > 0">
-        <p class="title">帳號</p>
-        <p class="title">留言</p>
-        <p class="title">時間</p>
+      <ul class="comment-group" v-if="post.comments_count > 0">
         <CommentItem
           v-for="comment in post.comments.data"
           :id="comment.id"
@@ -43,7 +44,7 @@ api.getIgPost(props.postId, store.token)
           :content="comment.text"
           :username="comment.username"
         />
-      </div>
+      </ul>
       <div class="comment-empty" v-else>
         <p class="icon">
           <i class="bx bx-message-alt-x"></i>
@@ -58,16 +59,12 @@ api.getIgPost(props.postId, store.token)
 @import '../assets/scss/color.scss';
 .post-view {
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   margin: auto;
   .comment-group {
     text-align: left;
     width: 90%;
     margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    grid-column-gap: 0.5rem;
-    grid-row-gap: 1.5rem;
     padding: 1.5rem 0;
     .title {
       font-size: 1.5rem;
