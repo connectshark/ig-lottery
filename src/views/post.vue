@@ -6,7 +6,6 @@ import CommentItem from '../components/comment/commentItem.vue'
 import Loading from '../components/loading.vue'
 import Preview from '../components/preview.vue'
 import FilterPanel from '../components/filterPanel.vue'
-import formatter from '../utils/formatter'
 
 const props = defineProps({
   postId: String
@@ -18,15 +17,18 @@ const post = ref({})
 api.getIgPost(props.postId, store.token)
   .then(res => {
     post.value = res
-    store.comments = formatter.comments(res.comments.data)
+    if (res.comments_count > 0) {
+      store.setComments(res.comments.data)
+    }
+
     loading.value = false
   })
 </script>
 
 <template>
   <div class="post-view">
-    <FilterPanel/>
-    
+    <FilterPanel />
+
     <Preview
       :caption="post.caption"
       :like_count="post.like_count"
@@ -38,7 +40,7 @@ api.getIgPost(props.postId, store.token)
     <template v-else>
       <ul class="comment-group" v-if="post.comments_count > 0">
         <CommentItem
-          v-for="comment in post.comments.data"
+          v-for="comment in post?.comments?.data"
           :id="comment.id"
           :timestamp="comment.timestamp"
           :content="comment.text"
@@ -56,7 +58,7 @@ api.getIgPost(props.postId, store.token)
 </template>
 
 <style scoped lang="scss">
-@import '../assets/scss/color.scss';
+@import "../assets/scss/color.scss";
 .post-view {
   width: 100%;
   max-width: 800px;

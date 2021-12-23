@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useTokenStore } from '../stores/token'
+import Modal from './modal.vue'
 
 const store = useTokenStore()
+const modal = ref(false)
 
 const targetContent = ref('')
 const addTarget = () => {
@@ -11,12 +13,19 @@ const addTarget = () => {
   targetContent.value = ''
 }
 
-const draw = () => {
+const drawMember = ref([])
 
+const draw = () => {
+  modal.value = true
+  drawMember.value = store.draw()
 }
 </script>
 
 <template>
+<teleport to="#modal">
+<Modal v-model:modal="modal"></Modal>
+</teleport>
+  
   <section class="filter">
     <h3>篩選條件設定</h3>
     <div class="row">
@@ -74,6 +83,24 @@ const draw = () => {
       <option value="0">0</option>
       <option v-for="num in 5" :key="num" :value="num">{{ num }}</option>
     </datalist>
+    <template v-if="drawMember.length > 0">
+    <h3>得獎名單</h3>
+    <div class="row grid-table">
+      <p class="title">中獎帳號</p>
+      <p class="title">留言</p>
+      <template v-for="item in drawMember" :key="item.id">
+        <p>
+          <a
+            target="_blank"
+            class="account"
+            rel="noopener noreferrer"
+            :href="`https://www.instagram.com/${item.name}/`"
+          >{{ item.name }}</a>
+        </p>
+        <p>{{ item.content }}</p>
+      </template>
+    </div>
+    </template>
   </section>
 </template>
 
@@ -144,6 +171,25 @@ const draw = () => {
       font-weight: 400;
       i {
         cursor: pointer;
+      }
+    }
+  }
+  .grid-table {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    .title {
+      font-weight: bold;
+    }
+    p {
+      font-size: 1rem;
+      line-height: 1.5;
+      word-break: break-all;
+    }
+    a {
+      color: $sub;
+      &:hover {
+        text-decoration: underline;
       }
     }
   }
