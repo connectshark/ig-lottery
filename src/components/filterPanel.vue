@@ -1,10 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useTokenStore } from '../stores/token'
-import Modal from './modal.vue'
 
 const store = useTokenStore()
-const modal = ref(false)
 
 const targetContent = ref('')
 const addTarget = () => {
@@ -16,16 +14,15 @@ const addTarget = () => {
 const drawMember = ref([])
 
 const draw = () => {
-  modal.value = true
   drawMember.value = store.draw()
+}
+
+const clear = () => {
+  drawMember.value = []
 }
 </script>
 
 <template>
-<teleport to="#modal">
-<Modal v-model:modal="modal"></Modal>
-</teleport>
-  
   <section class="filter">
     <h3>篩選條件設定</h3>
     <div class="row">
@@ -74,6 +71,7 @@ const draw = () => {
     <div class="row">
       <div class="bar">
         <input type="button" value="抽獎" @click="draw" class="btn" />
+        <input type="button" value="清除" @click="clear" class="btn" />
       </div>
     </div>
     <datalist id="peopleMark">
@@ -83,33 +81,34 @@ const draw = () => {
       <option value="0">0</option>
       <option v-for="num in 5" :key="num" :value="num">{{ num }}</option>
     </datalist>
-    <template v-if="drawMember.length > 0">
-    <h3>得獎名單</h3>
-    <div class="row grid-table">
-      <p class="title">中獎帳號</p>
-      <p class="title">留言</p>
-      <template v-for="item in drawMember" :key="item.id">
-        <p>
-          <a
-            target="_blank"
-            class="account"
-            rel="noopener noreferrer"
-            :href="`https://www.instagram.com/${item.name}/`"
-          >{{ item.name }}</a>
-        </p>
-        <p>{{ item.content }}</p>
-      </template>
-    </div>
-    </template>
+    <transition name="list">
+      <div class="panel" v-if="drawMember.length > 0">
+        <h3>得獎名單</h3>
+        <div class="row grid-table">
+          <p class="title">中獎帳號</p>
+          <p class="title">留言</p>
+          <template v-for="item in drawMember" :key="item.id">
+            <p>
+              <a
+                target="_blank"
+                class="account"
+                rel="noopener noreferrer"
+                :href="`https://www.instagram.com/${item.name}/`"
+              >{{ item.name }}</a>
+            </p>
+            <p>{{ item.content }}</p>
+          </template>
+        </div>
+      </div>
+    </transition>
   </section>
 </template>
 
 <style scoped lang="scss">
 @import "../assets/scss/color.scss";
 @import "../assets/scss/mixin.scss";
+@import "../assets/scss/transition.scss";
 .filter {
-  width: 90%;
-  margin: auto;
   padding: 2rem;
   box-sizing: border-box;
   text-align: left;
@@ -124,7 +123,7 @@ const draw = () => {
       font-size: 1rem;
       line-height: 1.5;
       font-weight: bold;
-      color: $sub;
+      color: $base;
       margin-bottom: 0.5rem;
     }
     .bar {
@@ -153,6 +152,8 @@ const draw = () => {
         @include funBtn;
         font-size: 1.5rem;
         line-height: 1.5;
+        display: inline-block;
+        margin: 0 1rem;
       }
     }
     .split {
@@ -174,22 +175,28 @@ const draw = () => {
       }
     }
   }
-  .grid-table {
-    text-align: center;
-    display: grid;
-    grid-template-columns: 40% 60%;
-    .title {
-      font-weight: bold;
-    }
-    p {
-      font-size: 1rem;
-      line-height: 1.5;
-      word-break: break-all;
-    }
-    a {
-      color: $sub;
-      &:hover {
-        text-decoration: underline;
+  .panel {
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    .grid-table {
+      text-align: center;
+      display: grid;
+      grid-template-columns: 40% 60%;
+      .title {
+        font-weight: bold;
+      }
+      p {
+        font-size: 1rem;
+        line-height: 1.5;
+        word-break: break-all;
+      }
+      a {
+        color: $sub;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
   }

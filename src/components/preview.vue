@@ -36,19 +36,14 @@ const time = computed(() => dayjs(props.timestamp).format('YYYY/MM/DD'))
 @import '../assets/scss/color.scss';
 
   .post {
-    width: 80%;
+    width: 90%;
     margin: auto;
-    font-size: 1rem;
-    padding: 1rem;
-    box-sizing: border-box;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     .title {
       font-size: 1.5rem;
       padding: 1rem 0;
       text-align: left;
       font-weight: 700;
-      color: $sub;
+      color: $base;
     }
     .detail {
       img {

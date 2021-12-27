@@ -1,7 +1,6 @@
 <script setup>
 import AuthBtn from '../components/authBtn.vue'
-import { useTokenStore } from '../stores/token'
-import Guide from '../components/guide.vue';
+import Guide from '../components/guide.vue'
 </script>
 
 <template>

@@ -1,8 +1,7 @@
 <template>
   <transition name="fade">
-    <div class="modal-background" @click="$emit('update:modal', false)" v-if="modal">
+    <div class="modal-background" v-if="modal">
       <div class="modal" @click.stop>
-        <slot />
       </div>
     </div>
   </transition>
@@ -10,8 +9,7 @@
 
 <script>
 export default {
-  props: ['modal'],
-  emits: ['update:modal']
+  props: ['modal']
 }
 </script>
 
